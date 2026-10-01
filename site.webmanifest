@@ -1,0 +1,10 @@
+{
+  "name": "ANDRES BUILDS",
+  "short_name": "A.B. Arcade",
+  "description": "Andrés Hernández — Creative Web Developer. I BUILD THINGS FOR THE WEB.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07060b",
+  "theme_color": "#07060b",
+  "icons": [{ "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

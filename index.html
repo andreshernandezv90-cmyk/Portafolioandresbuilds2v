@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es" data-fx="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ANDRES BUILDS · Andrés Hernández — Creative Web Developer</title>
+  <meta name="description" content="Andrés Hernández — Creative Web Developer en Guadalajara, México. Un portafolio que se comporta como una sala arcade: proyectos, skills, servicios y contacto. I BUILD THINGS FOR THE WEB.">
+  <meta name="author" content="Andrés Hernández">
+  <meta name="theme-color" content="#07060b">
+  <link rel="canonical" href="https://andresbuilds.dev/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://andresbuilds.dev/">
+  <meta property="og:title" content="ANDRES BUILDS — I BUILD THINGS FOR THE WEB.">
+  <meta property="og:description" content="Andrés Hernández, Creative Web Developer. Entra al arcade.">
+  <meta property="og:locale" content="es_MX">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="preload" href="assets/fonts/pressstart2p-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/boot.css">
+  <link rel="stylesheet" href="css/hub.css">
+  <link rel="stylesheet" href="css/handheld.css">
+  <link rel="stylesheet" href="css/screen.css">
+  <link rel="stylesheet" href="css/quick.css">
+  <link rel="modulepreload" href="js/main.js">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Andrés Hernández",
+    "jobTitle": "Creative Web Developer",
+    "url": "https://andresbuilds.dev",
+    "email": "mailto:hola@andresbuilds.dev",
+    "address": { "@type": "PostalAddress", "addressLocality": "Guadalajara", "addressCountry": "MX" },
+    "sameAs": ["https://github.com/andreshernandezv90-cmyk"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#/quick">Ir a Quick Mode (versión directa)</a>
+
+  <!-- ARCADE MODE · desktop room -->
+  <main class="arcade" id="arcade" aria-labelledby="arcade-title">
+    <h1 class="sr-only" id="arcade-title">ANDRES BUILDS — Andrés Hernández, Creative Web Developer. Sala arcade.</h1>
+  </main>
+
+  <!-- ARCADE MODE · phones become a handheld console -->
+  <div class="handheld" id="handheld"></div>
+
+  <!-- the screen you see when you step into a machine -->
+  <div class="screen-layer" id="screen-layer" hidden></div>
+
+  <!-- QUICK MODE -->
+  <div id="quick" hidden></div>
+
+  <noscript>
+    <div style="max-width:720px;margin:0 auto;padding:48px 20px;font-family:system-ui,sans-serif;color:#f3efe4;background:#07060b;line-height:1.6">
+      <p style="letter-spacing:.1em">ANDRES BUILDS</p>
+      <h1>Andrés Hernández</h1>
+      <p><strong>Creative Web Developer</strong> · Guadalajara, México</p>
+      <p>I BUILD THINGS FOR THE WEB.</p>
+      <p>Me gusta crear soluciones web que ayuden a resolver problemas reales, pero también disfruto poner mi creatividad en cada proyecto. Para mí, desarrollar no es solamente hacer que algo funcione, sino buscar una manera diferente e interesante de hacerlo.</p>
+      <p>Proyectos en desarrollo: Scoops de la Bruja Sabia (e-commerce) · English Teacher Website (landing page).</p>
+      <p>Contacto: <a style="color:#ffd23f" href="mailto:hola@andresbuilds.dev">hola@andresbuilds.dev</a> · <a style="color:#ffd23f" href="https://github.com/andreshernandezv90-cmyk">GitHub</a></p>
+      <p><small>El modo arcade necesita JavaScript.</small></p>
+    </div>
+  </noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

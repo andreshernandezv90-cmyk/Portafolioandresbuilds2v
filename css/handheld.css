@@ -1,0 +1,112 @@
+/* ═════════════════════════ HANDHELD (phones) ═════════════════════════ */
+.handheld { display: none; }
+
+@media (max-width: 760px) {
+  .handheld {
+    display: block;
+    min-height: 100dvh;
+    padding: calc(var(--hud-h) + 6px) 12px 18px;
+    background:
+      radial-gradient(ellipse at 50% 0%, #2a1a44 0%, transparent 60%),
+      #0a0812;
+  }
+  .hh {
+    position: relative;
+    max-width: 440px; margin: 0 auto;
+    padding: 14px 14px 18px;
+    border-radius: 22px 22px 46px 22px;
+    background:
+      linear-gradient(160deg, #3a2c5c 0%, #241a3d 45%, #1a1330 100%);
+    box-shadow:
+      inset 0 2px 0 #ffffff1f, inset 0 -6px 0 #0006,
+      0 30px 60px -20px #000, 0 0 0 1px #000;
+  }
+  .hh__top { display: flex; align-items: center; gap: 10px; padding: 0 6px 10px; }
+  .hh__led { width: 8px; height: 8px; border-radius: 50%; background: var(--c-red); box-shadow: 0 0 8px var(--c-red); }
+  .hh__brand { font-family: var(--f-pixel); font-size: 10px; letter-spacing: 0.08em; color: #d9cff5; }
+  .hh__brand small { color: var(--c-magenta); font-size: 8px; margin-left: 4px; }
+
+  .hh__screen-wrap {
+    padding: 14px 14px 22px;
+    background: #12101a;
+    border-radius: 10px 10px 34px 10px;
+    box-shadow: inset 0 0 0 2px #000, inset 0 3px 8px #000a;
+  }
+  .hh__screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: radial-gradient(ellipse at 50% 35%, #182433, #070a10 85%);
+    padding: 14px 12px;
+    min-height: 54dvh;
+    max-height: 62dvh;
+    display: flex; flex-direction: column;
+  }
+  .hh__head { text-align: center; padding-bottom: 10px; border-bottom: 1px dashed #ffffff1f; }
+  .hh__p1 { font-family: var(--f-pixel); font-size: 9px; color: var(--c-yellow); letter-spacing: 0.1em; }
+  .hh__name { font-family: var(--f-pixel); font-size: 13px; line-height: 1.6; margin-top: 6px; }
+  .hh__role { font-size: 13px; color: var(--ink-2); }
+  .hh__tag { font-family: var(--f-crt); font-size: 20px; color: var(--c-amber); margin-top: 4px; text-shadow: 0 0 6px #ffb54788; }
+
+  .hh__menu { flex: 1; overflow-y: auto; margin-top: 10px; display: grid; gap: 6px; align-content: start; scrollbar-width: thin; }
+  .hh-item {
+    width: 100%; min-height: 52px;
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ffffff12;
+    background: #ffffff06;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  }
+  .hh-item:active { transform: scale(0.98); }
+  .hh-item.is-sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); box-shadow: 0 0 16px -6px var(--accent); }
+  .hh-item__icon {
+    width: 32px; height: 32px; flex: none;
+    display: grid; place-items: center;
+    border-radius: 6px;
+    font-family: var(--f-pixel); font-size: 10px;
+    color: #000; background: var(--accent);
+  }
+  .hh-item__txt { display: grid; }
+  .hh-item__label { font-family: var(--f-pixel); font-size: 10px; letter-spacing: 0.05em; line-height: 1.6; }
+  .hh-item__sub { font-size: 13px; color: var(--ink-2); }
+  .hh-item.is-broken { opacity: 0.6; }
+  .hh-item.is-broken .hh-item__icon { background: #555; color: #ddd; }
+
+  .hh__controls { display: flex; justify-content: space-between; align-items: center; padding: 22px 8px 6px; }
+  .dpad { position: relative; width: 120px; height: 120px; display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); }
+  .dpad__b, .dpad__c { background: #15111f; box-shadow: inset 0 2px 0 #ffffff1a, 0 3px 0 #000; }
+  .dpad__up { grid-area: 1 / 2; border-radius: 6px 6px 0 0; }
+  .dpad__left { grid-area: 2 / 1; border-radius: 6px 0 0 6px; }
+  .dpad__c { grid-area: 2 / 2; }
+  .dpad__right { grid-area: 2 / 3; border-radius: 0 6px 6px 0; }
+  .dpad__down { grid-area: 3 / 2; border-radius: 0 0 6px 6px; }
+  .dpad__b.is-pressed, .dpad__b:active { background: #0c0912; box-shadow: inset 0 2px 4px #000; }
+  .ab { display: flex; gap: 16px; transform: rotate(-22deg); }
+  .ab__b {
+    width: 56px; height: 56px; border-radius: 50%;
+    font-family: var(--f-pixel); font-size: 12px; color: #fff;
+    background: radial-gradient(circle at 35% 30%, #ff9ad4, #e0207f 55%, #8a0f4c);
+    box-shadow: 0 5px 0 #4d0a2a, 0 8px 16px -6px #000;
+    transition: transform 0.06s, box-shadow 0.06s;
+  }
+  .ab__b--b { margin-top: 26px; }
+  .ab__b.is-pressed, .ab__b:active { transform: translateY(4px); box-shadow: 0 1px 0 #4d0a2a; }
+
+  .hh__pills { display: flex; justify-content: center; gap: 22px; padding-top: 14px; }
+  .pill { display: grid; justify-items: center; gap: 4px; text-decoration: none; min-width: 64px; min-height: 44px; }
+  .pill span {
+    width: 54px; height: 14px; border-radius: 8px;
+    background: #15111f; box-shadow: inset 0 1px 0 #ffffff1a, 0 2px 0 #000;
+    font-size: 0; transform: rotate(-22deg);
+  }
+  .pill small { font-family: var(--f-pixel); font-size: 7px; color: #b7a9db; letter-spacing: 0.1em; }
+  .pill:active span { transform: rotate(-22deg) translateY(2px); box-shadow: none; }
+
+  .hh__bottom { display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 8px 0; }
+  .hh__speaker { position: relative; display: grid; grid-template-columns: repeat(6, 6px); gap: 6px; transform: rotate(-22deg); }
+  .hh__speaker i { width: 6px; height: 6px; border-radius: 50%; background: #0c0912; box-shadow: inset 0 1px 1px #000; }
+  .hh-coin { position: absolute; right: -40px; top: -6px; --s: 16px; transform: rotate(22deg); }
+  .hh__credits { font-family: var(--f-pixel); font-size: 8px; color: #ffffff40; min-height: 32px; padding: 0 6px; }
+}

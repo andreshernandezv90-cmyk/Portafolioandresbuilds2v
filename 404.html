@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GAME OVER · 404 · ANDRES BUILDS</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/pressstart2p-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <style>
+    body { display: grid; place-items: center; min-height: 100dvh; padding: 24px; text-align: center;
+      background: radial-gradient(ellipse at center, #1a0d12 0%, #07060b 70%); }
+    .go { display: grid; justify-items: center; gap: 18px; max-width: 640px; }
+    .go__title { font-family: var(--f-pixel); font-size: clamp(28px, 8vw, 64px); color: var(--c-red);
+      text-shadow: -3px 0 #ff2d7a99, 3px 0 #2de1ff66, 0 6px 0 #4a0f0a; line-height: 1.1; }
+    .go__code { font-family: var(--f-pixel); font-size: clamp(16px, 4vw, 26px); color: var(--ink-2); }
+    .go__msg { font-family: var(--f-pixel); font-size: clamp(10px, 2vw, 13px); line-height: 2; color: var(--ink); }
+    .go__q { font-family: var(--f-pixel); font-size: 14px; color: var(--c-yellow); margin-top: 12px; }
+    .go__count { font-family: var(--f-pixel); font-size: 22px; color: var(--c-yellow); }
+    .go__btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .go__joke { min-height: 2.4em; font-family: var(--f-pixel); font-size: 10px; line-height: 2; color: var(--muted); }
+    .go__links { font-size: 0.95rem; color: var(--muted); }
+    .go__links a { color: var(--ink-2); }
+    .scan { position: fixed; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(#0000 0 2px, #00000055 2px 3px); }
+  </style>
+</head>
+<body>
+  <main class="go">
+    <h1 class="go__title">GAME OVER</h1>
+    <p class="go__code">404</p>
+    <p class="go__msg">THE PAGE YOU'RE LOOKING FOR<br>IS IN ANOTHER CASTLE.</p>
+    <p class="go__q">CONTINUE?</p>
+    <p class="go__count" aria-hidden="true" id="count">9</p>
+    <div class="go__btns">
+      <a class="arc-btn" href="/" id="yes" style="--btn:var(--c-green)">YES</a>
+      <button class="arc-btn arc-btn--ghost" type="button" id="no">NO</button>
+    </div>
+    <p class="go__joke" id="joke" role="status"></p>
+    <p class="go__links">¿Prefieres lo directo? <a href="/#/quick">Quick Mode</a> · <a href="mailto:hola@andresbuilds.dev">hola@andresbuilds.dev</a></p>
+  </main>
+  <div class="scan" aria-hidden="true"></div>
+  <script src="/js/404.js" defer></script>
+</body>
+</html>
