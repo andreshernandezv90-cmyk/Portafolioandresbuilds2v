@@ -36,7 +36,7 @@ function detail(p) {
   if (!p) {
     return `
       <article class="gd gd--locked">
-        <div class="gd__cover">${cover('locked')}</div>
+        <div class="gd__cover">${cover('locked', 'Juego bloqueado')}</div>
         <div class="gd__info">
           <p class="kicker">GAME 0${projects.length + 1}</p>
           <h2 class="gd__title">??? — NEXT PROJECT</h2>
@@ -58,7 +58,7 @@ function detail(p) {
     : '<p class="muted small">SCREENSHOTS: COMING SOON</p>';
   return `
     <article class="gd">
-      <div class="gd__cover">${cover(p.cover)}<span class="gd__ribbon">${esc(STATUS_LABEL[p.status])}</span></div>
+      <div class="gd__cover">${cover(p.cover, esc(`Portada de ${p.title}`))}<span class="gd__ribbon">${esc(STATUS_LABEL[p.status])}</span></div>
       <div class="gd__info">
         <p class="kicker">${esc(p.slot)} · ${esc(p.type)}</p>
         <h2 class="gd__title">${esc(p.title)}</h2>
@@ -79,12 +79,12 @@ function detail(p) {
 function box(p, i) {
   if (!p) {
     return `<li><button type="button" class="gbox gbox--locked" data-game="locked-${i}" aria-pressed="false">
-      <span class="gbox__art">${cover('locked')}</span>
+      <span class="gbox__art" aria-hidden="true">${cover('locked')}</span>
       <span class="gbox__label"><span class="gbox__slot">???</span><span class="gbox__name">NEXT PROJECT</span><span class="gbox__state">LOCKED</span></span>
     </button></li>`;
   }
   return `<li><button type="button" class="gbox" data-game="${esc(p.id)}" aria-pressed="false">
-    <span class="gbox__art">${cover(p.cover)}</span>
+    <span class="gbox__art" aria-hidden="true">${cover(p.cover)}</span>
     <span class="gbox__label"><span class="gbox__slot">${esc(p.slot)}</span><span class="gbox__name">${esc(p.title)}</span><span class="gbox__state">${esc(STATUS_LABEL[p.status])}</span></span>
   </button></li>`;
 }

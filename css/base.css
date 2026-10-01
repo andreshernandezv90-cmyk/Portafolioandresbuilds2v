@@ -164,8 +164,17 @@ button.hud__item:hover, a.hud__item:hover { background: #ffffff12; color: var(--
   border-radius: 6px;
   box-shadow: 0 10px 30px -10px #000, 0 0 24px -8px var(--t);
   font-family: var(--f-pixel); font-size: 10px; line-height: 1.7;
-  animation: toastIn 0.35s var(--ease-snap);
+  position: relative; overflow: hidden;
+  animation: toastIn 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
+.toast::after { /* time-left bar */
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--t); opacity: 0.7; transform-origin: left;
+  animation: toastTimer var(--ms, 3600ms) linear forwards;
+}
+@keyframes toastTimer { to { transform: scaleX(0); } }
+.toast--achievement .toast__title, .toast--secret .toast__title { animation: titleGlow 1.2s ease-out; }
+@keyframes titleGlow { from { text-shadow: 0 0 14px var(--t); } }
 .toast--coin { --t: var(--c-yellow); }
 .toast--secret { --t: var(--c-magenta); }
 .toast--achievement { --t: var(--c-cyan); }
@@ -174,8 +183,8 @@ button.hud__item:hover, a.hud__item:hover { background: #ffffff12; color: var(--
 .toast__title { color: var(--t); }
 .toast__text { color: var(--ink-2); font-family: var(--f-body); font-size: 13px; margin-top: 4px; letter-spacing: 0; }
 .toast.is-leaving { animation: toastOut 0.3s forwards; }
-@keyframes toastIn { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
-@keyframes toastOut { to { opacity: 0; transform: translateX(30px); } }
+@keyframes toastIn { from { opacity: 0; transform: translateX(40px) scale(0.94); } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(40px) scale(0.96); } }
 
 /* ───────────────────────── COINS (collectibles) ───────────────────────── */
 .coin {
@@ -195,9 +204,17 @@ button.hud__item:hover, a.hud__item:hover { background: #ffffff12; color: var(--
   animation: coinSpin 2.4s linear infinite;
 }
 .coin:hover .coin__face, .coin:focus-visible .coin__face { box-shadow: inset 0 0 0 2px #fff, 0 0 18px #ffd23f; }
-.coin.is-collected { pointer-events: none; animation: coinGet 0.6s var(--ease-out) forwards; }
+.coin.is-collected { pointer-events: none; }
+.coin.is-collected .coin__face { animation: coinGet 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.coin.is-collected::before, .coin.is-collected::after { /* pickup burst */
+  content: ''; position: absolute; left: 50%; top: 50%; width: var(--s); height: var(--s); margin: calc(var(--s) / -2);
+  border-radius: 50%; border: 2px solid var(--c-yellow);
+  animation: coinRing 0.55s ease-out forwards;
+}
+.coin.is-collected::after { border-style: dotted; animation-delay: 0.08s; }
+@keyframes coinRing { from { transform: scale(0.6); opacity: 1; } to { transform: scale(3); opacity: 0; } }
 @keyframes coinSpin { 0% { transform: rotateY(0); } 100% { transform: rotateY(360deg); } }
-@keyframes coinGet { 30% { transform: translateY(-26px) scale(1.3); } 100% { transform: translateY(-50px) scale(0.4); opacity: 0; } }
+@keyframes coinGet { 35% { transform: translateY(-28px) scale(1.35) rotateY(540deg); filter: brightness(1.6); } 100% { transform: translateY(-54px) scale(0.3) rotateY(900deg); opacity: 0; } }
 
 /* ───────────────────────── DEV MODE ───────────────────────── */
 .dev-note {

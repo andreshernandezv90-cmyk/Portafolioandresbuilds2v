@@ -29,11 +29,12 @@ export function mount(root) {
   const nodes = skills.filter((s) => s.id !== 'core');
   const order = ['root', ...branches.map((b) => b.id)];
   const sorted = [byId.core, ...nodes].sort((a, b) => order.indexOf(a.branch) - order.indexOf(b.branch));
+  const depth = (s) => (s.parent ? 1 + depth(byId[s.parent]) : 0);
   const lines = skills
     .filter((s) => s.parent)
     .map((s) => {
       const p = byId[s.parent];
-      return `<line x1="${p.x}" y1="${p.y}" x2="${s.x}" y2="${s.y}" class="link link--${s.state}" style="--bc:${branchColor(s.branch)}"/>`;
+      return `<line pathLength="1" x1="${p.x}" y1="${p.y}" x2="${s.x}" y2="${s.y}" class="link link--${s.state}" style="--bc:${branchColor(s.branch)};--depth:${depth(s)}"/>`;
     }).join('');
 
   root.innerHTML = `
@@ -46,7 +47,7 @@ export function mount(root) {
           <svg class="tree__links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>
           <ul class="tree__nodes" role="list" aria-label="Habilidades">
             ${sorted.map((s) => `
-              <li class="tree__item" style="--x:${s.x}%;--y:${s.y}%;--bc:${branchColor(s.branch)}">
+              <li class="tree__item" style="--x:${s.x}%;--y:${s.y}%;--bc:${branchColor(s.branch)};--depth:${depth(s)}">
                 <button type="button" class="node node--${s.state}${s.id === 'core' ? ' node--root' : ''}" data-skill="${s.id}" aria-pressed="false">
                   <span class="node__icon" aria-hidden="true">${SKILL_STATES[s.state].icon}</span>
                   <span class="node__name">${esc(s.name)}</span>

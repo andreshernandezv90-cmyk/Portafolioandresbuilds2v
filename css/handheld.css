@@ -110,3 +110,40 @@
   .hh-coin { position: absolute; right: -40px; top: -6px; --s: 16px; transform: rotate(22deg); }
   .hh__credits { font-family: var(--f-pixel); font-size: 8px; color: #ffffff40; min-height: 32px; padding: 0 6px; }
 }
+
+/* ───────────── handheld polish ───────────── */
+@media (max-width: 760px) {
+  .hh::before { /* molded plastic highlight + grip lines */
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background:
+      linear-gradient(135deg, #ffffff1f 0%, transparent 22%),
+      repeating-linear-gradient(90deg, transparent 0 6px, #00000026 6px 8px) right 14px bottom 70px / 46px 90px no-repeat;
+  }
+  [data-fx='on'] .hh__led { animation: ledPulse 2.4s ease-in-out infinite; }
+  @keyframes ledPulse { 50% { box-shadow: 0 0 3px var(--c-red); opacity: 0.7; } }
+  .hh__screen-wrap { position: relative; padding-top: 24px; }
+  .hh__screen-wrap::before {
+    content: 'A.B. PORTABLE · COLOR DISPLAY'; position: absolute; top: 7px; left: 0; right: 0; text-align: center;
+    font-family: var(--f-pixel); font-size: 6.5px; letter-spacing: 0.12em; color: #8f84b3;
+  }
+  .hh__screen::after { /* glass reflection */
+    content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    background: linear-gradient(125deg, #ffffff14 0%, #ffffff05 28%, transparent 40%);
+  }
+  .hh-item { position: relative; transition: background 0.25s, border-color 0.25s, transform 0.15s, box-shadow 0.25s; }
+  .hh-item.is-sel::after {
+    content: '◀'; position: absolute; right: 12px; top: 50%; translate: 0 -50%;
+    font-size: 10px; color: var(--accent);
+  }
+  [data-fx='on'] .hh-item.is-sel::after { animation: nudge 0.9s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateX(-4px); } }
+  .dpad__b, .dpad__c { transition: background 0.1s, box-shadow 0.1s; }
+  .dpad__c { border-radius: 2px; background: radial-gradient(circle, #0c0912 30%, #15111f 32%); }
+  .hh__credits { transition: color 0.3s; }
+
+  /* screen powers on after PRESS START */
+  .handheld.is-off .hh__screen > :not(.crt-overlay) { opacity: 0; }
+  .handheld.is-powering .hh__screen { animation: screenOn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .handheld.is-powering .hh__head { animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s backwards; }
+  .handheld.is-powering .hh__menu li { animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(0.45s + var(--n) * 0.06s); }
+}

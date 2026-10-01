@@ -5,7 +5,7 @@ import { profile } from '../data/profile.js';
 import { projects } from '../data/projects.js';
 import { store } from '../core/state.js';
 import { sfx } from '../core/sound.js';
-import { $, el, esc, motionWait, fxOn, prefersReducedMotion } from '../core/dom.js';
+import { $, el, esc, wait, motionWait, fxOn, prefersReducedMotion } from '../core/dom.js';
 
 const LOG = [
   ['BOOTING...', ''],
@@ -20,6 +20,7 @@ export function runBoot({ onStart }) {
   const node = el(`
     <div class="boot${quick ? '' : ' is-powering'}" id="boot" role="region" aria-label="Pantalla de inicio">
       <div class="boot__tube">
+        <span class="boot__stars" aria-hidden="true"></span>
         <pre class="boot__log" aria-live="polite"></pre>
         <span class="crt-overlay" aria-hidden="true"></span>
       </div>
@@ -44,7 +45,9 @@ export function runBoot({ onStart }) {
   };
 
   async function playLog() {
-    await motionWait(500);
+    // let the pixel fonts arrive first so nothing swaps mid-animation
+    await Promise.race([document.fonts?.ready, wait(900)]);
+    await motionWait(350);
     for (let i = 1; i <= LOG.length; i++) {
       if (skipLog) break;
       renderLog(i, true);
@@ -60,7 +63,7 @@ export function runBoot({ onStart }) {
     $('[data-skip]', node).remove();
     tube.insertAdjacentHTML('afterbegin', `
       <div class="boot__title">
-        <h1 class="boot__brand">ANDRES <span>BUILDS</span></h1>
+        <div class="boot__brand-wrap"><p class="boot__brand"><span class="l1">ANDRES</span><span>BUILDS</span></p><span class="boot__shine" aria-hidden="true"></span></div>
         <p class="boot__tagline">${esc(profile.tagline)}</p>
         <div class="boot__player">
           <p class="p1">PLAYER 1</p>
@@ -96,6 +99,8 @@ export function runBoot({ onStart }) {
     if (stage === 'done') return;
     stage = 'done';
     sfx.press();
+    $('[data-coin-btn]', node)?.classList.add('is-go');
+    await motionWait(220);
     store.markBooted();
     document.removeEventListener('keydown', onKey);
     node.classList.add('is-leaving');

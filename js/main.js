@@ -107,12 +107,15 @@ const hud = mountHud({
 document.body.prepend(hud.node);
 hud.setToggle('dev', doc.classList.contains('dev-mode'));
 
-const hub = mountHub(els.arcade, ctx);
-const handheld = mountHandheld(els.handheld, ctx);
+const initialRoute = location.hash.replace(/^#\/?/, '');
+const willBoot = initialRoute !== 'quick' && !machineById(initialRoute);
+const hub = mountHub(els.arcade, ctx, { dark: willBoot });
+const handheld = mountHandheld(els.handheld, ctx, { dark: willBoot });
 const screen = createScreen({ layer: els.layer, ctx, hub, handheld, background: els.arcade });
 
 // ───────────── modes ─────────────
 function showArcade() {
+  if (booted) { hub.powerOn(); handheld.powerOn(); }
   els.quick.hidden = true;
   els.arcade.hidden = false;
   els.handheld.hidden = false;
@@ -173,10 +176,14 @@ initCoins();
 devtoolsMessage();
 initAfk({ arcade: els.arcade, isHub: () => booted && !screen.current && !els.arcade.hidden, toast });
 
-const initial = location.hash.replace(/^#\/?/, '');
-if (initial === 'quick') {
+// Only move focus for keyboard players — a mouse click shouldn't light up a cabinet by itself.
+let usingKeyboard = false;
+window.addEventListener('keydown', () => (usingKeyboard = true), true);
+window.addEventListener('pointerdown', () => (usingKeyboard = false), true);
+
+if (initialRoute === 'quick') {
   showQuick();
-} else if (initial && machineById(initial)) {
+} else if (initialRoute && machineById(initialRoute)) {
   booted = true;
   route();
 } else {
@@ -184,7 +191,9 @@ if (initial === 'quick') {
     onStart() {
       booted = true;
       bootCtl = null;
-      if (!isHandheld()) setTimeout(() => hub.focusMachine('projects'), 50);
+      hub.powerOn();
+      handheld.powerOn();
+      if (usingKeyboard && !isHandheld()) setTimeout(() => hub.focusMachine('projects'), 1400);
       route();
     },
   });

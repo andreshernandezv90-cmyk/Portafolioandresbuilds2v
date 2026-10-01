@@ -11,12 +11,12 @@ import { coinMarkup } from './coins.js';
 const ICON = { projects: '▶', profile: '☺', skills: '◆', saves: '▣', missions: '⚑', contact: '2P', broken: '✕' };
 
 function items() {
-  const list = machines.map((m) => {
+  const list = machines.map((m, n) => {
     const broken = m.id === 'broken';
     const fixed = broken && store.hasSecret('out-of-order');
     const label = broken && fixed ? 'BUG HUNTER' : m.label;
     const sub = broken ? (fixed ? 'Minijuego' : 'Fuera de servicio') : m.sub;
-    return `<li><button type="button" class="hh-item${broken && !fixed ? ' is-broken' : ''}" data-open="${m.id}" style="--accent:${m.accent}">
+    return `<li style="--n:${n}"><button type="button" class="hh-item${broken && !fixed ? ' is-broken' : ''}" data-open="${m.id}" style="--accent:${m.accent}">
       <span class="hh-item__icon" aria-hidden="true">${ICON[m.id]}</span>
       <span class="hh-item__txt"><span class="hh-item__label">${esc(label)}</span><span class="hh-item__sub">${esc(sub)}</span></span>
     </button></li>`;
@@ -29,7 +29,8 @@ function items() {
   return list.join('');
 }
 
-export function mountHandheld(root, api) {
+export function mountHandheld(root, api, { dark = false } = {}) {
+  if (dark) root.classList.add('is-off');
   root.innerHTML = `
   <div class="hh">
     <div class="hh__top">
@@ -110,8 +111,17 @@ export function mountHandheld(root, api) {
     if (evt === 'devroom-unlocked' || (evt === 'secret' && id === 'out-of-order')) refresh();
   });
 
+  let powerTimer;
   return {
     root,
+    powerOn() {
+      if (!root.classList.contains('is-off')) return;
+      root.classList.remove('is-off');
+      if (document.documentElement.dataset.fx !== 'on' || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      root.classList.add('is-powering');
+      clearTimeout(powerTimer);
+      powerTimer = setTimeout(() => root.classList.remove('is-powering'), 1600);
+    },
     focusMachine(id) {
       const b = $(`.hh-item[data-open="${id}"]`, root);
       if (b) { select(btns().indexOf(b)); b.focus({ preventScroll: true }); }

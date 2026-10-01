@@ -18,7 +18,7 @@ function ensureStack() {
 function show({ kind, title, text, ms = 3600 }) {
   showing++;
   const node = el(`
-    <div class="toast toast--${kind}">
+    <div class="toast toast--${kind}" style="--ms:${ms}ms">
       <span class="toast__prompt" aria-hidden="true">&gt;_</span>
       <div>
         <p class="toast__title">${esc(title)}</p>

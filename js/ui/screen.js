@@ -18,6 +18,22 @@ const loaders = {
   achievements: () => import('../panels/achievements.js'),
 };
 
+// Panel pieces that "boot in" one after another when a screen opens.
+const STAGGER = [
+  '.kicker', '.shelf > li', '.gd', '.sheet__portrait', '.sheet__main > *',
+  '.tree__legend', '.tree__board', '.tree__branches', '.skill-info', '.slots > li', '.save-detail',
+  '.missions__intro', '.quest', '.p2 > *', '.bh', '.dr-scene', '.dr-card', '.achs__stat', '.ach',
+].join(',');
+
+function stagger(root) {
+  let i = 0;
+  root.querySelectorAll(STAGGER).forEach((node) => {
+    if (node.parentElement.closest('.rise')) return;
+    node.classList.add('rise');
+    node.style.setProperty('--ri', Math.min(i++, 16));
+  });
+}
+
 // Sections reachable with PREV / NEXT inside the screen.
 const ORDER = machines.filter((m) => m.id !== 'broken').map((m) => m.id);
 
@@ -65,7 +81,7 @@ export function createScreen({ layer, ctx, hub, handheld, background }) {
       if (!isHandheld()) {
         background.classList.add('is-zoomed');
         hub.zoomTo(origin?.closest?.('.cab-slot') || origin);
-        await motionWait(560);
+        await motionWait(600);
       }
     }
     let mod;
@@ -84,16 +100,17 @@ export function createScreen({ layer, ctx, hub, handheld, background }) {
     const node = frame(m);
     if (switching && animate()) {
       layer.classList.add('is-switching');
-      await motionWait(160);
-      layer.classList.remove('is-switching');
+      await motionWait(200);
     }
     layer.replaceChildren(node);
     layer.hidden = false;
+    if (switching) requestAnimationFrame(() => layer.classList.remove('is-switching'));
     [hub.root, handheld.root].forEach((r) => r.setAttribute('inert', ''));
     layer.classList.toggle('is-on', animate() && !switching);
 
     current = m.id;
     cleanup = mod.mount($('.screen__body', node), ctx) || null;
+    if (animate()) stagger($('.screen__body', node));
     store.visit(m.id);
     if (!switching) sfx.powerOn();
     $('#screen-title', node).focus({ preventScroll: true });
